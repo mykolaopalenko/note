@@ -1,0 +1,20 @@
+.noteForm{
+   margin-bottom: 15px;
+}
+
+.formGroup {
+   margin-bottom: 15px;
+}
+
+.field {
+   padding: 5px 5px;
+}
+.btn{
+   display: inline-block;
+   background-color: #111;
+   cursor: pointer;
+   padding: 10px 15px;
+   border: 1px solid;
+   border-radius: 5px;
+   color: #fff;
+}

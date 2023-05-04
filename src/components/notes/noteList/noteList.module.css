@@ -1,0 +1,27 @@
+.notises {
+}
+
+.items {
+  display: grid;
+  gap: 20px;
+  grid-template-columns: 1fr 1fr;
+  justify-items: center;
+}
+.item {
+  width: 200px;
+  height: 150px;
+  border: 1px solid;
+  border-color: red;
+  padding: 10px;
+  margin: 5px;
+}
+
+.remove {
+  color: red;
+  font-size: 18px;
+  font-weight: bold;
+  cursor: pointer;
+  position: relative;
+  top: 2px;
+  right: 2px;
+}
