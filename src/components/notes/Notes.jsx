@@ -15,6 +15,23 @@ class Notes extends Component {
     filter: '',
   };
 
+  componentDidMount() {
+    const notes = JSON.parse(localStorage.getItem('notes'));
+    if (notes?.length) {
+      this.setState({
+        notes,
+      });
+    }
+  }
+
+  componentDidUpdate(prevProps,  prevState) {
+    const { notes } = this.state;
+
+    if (prevState.notes.length !== notes.length) {
+      console.log("update")
+      localStorage.setItem('notes', JSON.stringify(notes));
+    }
+  }
 
   addNote = data => {
     this.setState(prevState => {

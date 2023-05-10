@@ -48,7 +48,6 @@ class AddNote extends Component {
             className={styles.field}
             placeholder="Напишіть заголовок"
             type="text"
-            required
           />
         </div>
         <div className={styles.formGroup}>
