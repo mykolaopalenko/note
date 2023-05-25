@@ -1,75 +1,71 @@
-import { Component } from 'react';
-import { nanoid } from 'nanoid';
+import { useState, memo, useMemo } from 'react';
 import PropTypes from 'prop-types';
 import styles from './addNote.module.css';
+import { nanoid } from 'nanoid';
 
-class AddNote extends Component {
-  state = {
+const AddNote = ({ onSubmit, id }) => {
+  const [state, setState] = useState({
     title: '',
     text: '',
-  };
+  });
 
-  titleId = nanoid();
-  textId = nanoid();
-
-  handleChange = ({ target }) => {
+  const handleChange = ({ target }) => {
     const { value, name } = target;
-    this.setState({
+    setState({
+      ...state,
       [name]: value,
     });
   };
 
-  handleSubmit = e => {
+  const handleSubmit = e => {
     e.preventDefault();
-    const { onSubmit } = this.props;
-    onSubmit({ ...this.state });
-    this.reset();
+    onSubmit({ ...state });
+    reset();
   };
 
-  reset() {
-    this.setState({
+  const reset = () => {
+    setState({
       title: '',
       text: '',
     });
-  }
+  };
 
-  render() {
-    const { handleChange, handleSubmit, titleId, textId } = this;
-    const { title, text } = this.state;
-    return (
-      <form onSubmit={handleSubmit} className={styles.noteForm}>
-        <div className={styles.formGroup}>
-          <label htmlFor={titleId}>Заголовок</label>
-          <input
-            id={titleId}
-            value={title}
-            name="title"
-            onChange={handleChange}
-            className={styles.field}
-            placeholder="Напишіть заголовок"
-            type="text"
-          />
-        </div>
-        <div className={styles.formGroup}>
-          <label htmlFor={textId}>Нотатка</label>
-          <input
-            id={textId}
-            value={text}
-            name="text"
-            onChange={handleChange}
-            className={styles.field}
-            placeholder="Напишіть нотатку"
-            type="text"
-            required
-          />
-        </div>
-        <button className={styles.btn}>Добавити нотатку</button>
-      </form>
-    );
-  }
-}
+  const titleId = useMemo(()=> nanoid(), [])
+  const textId = useMemo(()=> nanoid(), [])
+  
+  return (
+    <form onSubmit={handleSubmit} className={styles.noteForm}>
+      <div className={styles.formGroup}>
+        <label htmlFor={id}>Заголовок</label>
+        <input
+          id={titleId}
+          value={state.title}
+          name="title"
+          onChange={handleChange}
+          className={styles.field}
+          placeholder="Напишіть заголовок"
+          type="text"
+        />
+      </div>
+      <div className={styles.formGroup}>
+        <label htmlFor={id}>Нотатка</label>
+        <input
+          id={textId}
+          value={state.text}
+          name="text"
+          onChange={handleChange}
+          className={styles.field}
+          placeholder="Напишіть нотатку"
+          type="text"
+          required
+        />
+      </div>
+      <button className={styles.btn}>Добавити нотатку</button>
+    </form>
+  );
+};
 
-export default AddNote;
+export default memo(AddNote);
 
 AddNote.defaultProps = {
   onSubmit: () => {},

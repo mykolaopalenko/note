@@ -1,16 +1,9 @@
 import PropTypes from 'prop-types';
 import styles from './noteList.module.css';
+import NoteListItem from './NoteListItem';
 
 const NoteList = ({ items, removeNote }) => {
-  const elements = items.map(({ id, title, text }) => (
-    <li key={id} className={styles.item}>
-      <span className={styles.remove} onClick={() => removeNote(id)}>
-        X
-      </span>
-      <h2> {title}</h2>
-      <p>{text}</p>
-    </li>
-  ));
+  const elements = items.map(item => <NoteListItem id={item.id} {...item} removeNote={removeNote} />);
   return (
     <div className={styles.notises}>
       <ul className={styles.items}>{elements}</ul>
