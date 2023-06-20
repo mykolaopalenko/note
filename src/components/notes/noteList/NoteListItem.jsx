@@ -5,8 +5,8 @@ const NoteListItem = ({ id, title, text, removeNote }) => {
   return (
     <li className={styles.item}>
       <span className={styles.remove} onClick={() => removeNote(id)}>
-     X
-   </span>
+        X
+      </span>
 
       <h2> {title}</h2>
       <p>{text}</p>
@@ -14,4 +14,4 @@ const NoteListItem = ({ id, title, text, removeNote }) => {
   );
 };
 
-export default memo(NoteListItem) ;
+export default memo(NoteListItem);

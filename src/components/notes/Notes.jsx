@@ -1,84 +1,50 @@
-import { useState, useEffect, useCallback } from 'react';
-import { nanoid } from 'nanoid';
+import { useSelector, useDispatch } from 'react-redux';
+import { addNote, removeNote,} from '../../redux/notes/notes-actions';
 import styles from './Notes.module.css';
 import AddNote from './addNote/addNote';
 import NoteList from './noteList/noteList';
+import { getFilteredNotes } from 'redux/notes/notes-selectors';
+import { setFiler } from 'redux/filter/filter-actions';
 
-const getFindNotes = (notes, filter) => {
-  if (!notes) {
-    return notes;
-  }
-
-  const normalizeFilter = filter.toLocaleLowerCase();
-
-  const filteredNotes = notes.filter(({ title, text }) => {
-    const normalizeTitle = title.toLocaleLowerCase();
-    const normalizeText = text.toLocaleLowerCase();
-    const result =
-      normalizeTitle.includes(normalizeFilter) ||
-      normalizeText.includes(normalizeFilter);
-    return result;
-  });
-
-  return filteredNotes;
-};
+import { getFilter } from 'redux/filter/filter-selectors';
 
 const Notes = () => {
-  const [notes, setNotes] = useState(() => {
-    const value = JSON.parse(localStorage.getItem('notes'));
-    return value || [];
-  });
-  const [filter, setFilter] = useState('');
+  const notes = useSelector(getFilteredNotes);
+  const filter = useSelector(getFilter);
 
-  useEffect(() => {
-    localStorage.setItem('notes', JSON.stringify(notes));
-  }, [notes]);
+  const dispatch = useDispatch();
 
-  const addNote = useCallback(
-    data => {
-      setNotes(prevNotes => {
-        const newNote = {
-          ...data,
-          id: nanoid(),
-        };
+  const onAddNote = data => {
+    const action = addNote(data);
+    dispatch(action);
+  };
 
-        return [...prevNotes, newNote];
-      });
-    },
-    [setNotes]
-  );
+  const onRemoveNote = id => {
+    dispatch(removeNote(id));
+  };
 
-  const removeNote = useCallback(
-    id => {
-      setNotes(prevNotes => prevNotes.filter(item => item.id !== id));
-    },
-    [setNotes]
-  );
+  const handleFilter = ({ target }) => {
+    dispatch(setFiler(target.value));
+  };
 
-  const handleFilter = useCallback(
-    ({ target }) => {
-      setFilter(target.value);
-    },
-    [setFilter]
-  );
-
-  const findNotes = getFindNotes(notes, filter);
   return (
     <div>
       <div className={styles.noteBlock}>
-        <AddNote onSubmit={addNote} />
+        <AddNote onSubmit={onAddNote} />
         <input
           className={styles.filterFild}
           name="filter"
           onChange={handleFilter}
           placeholder="Знайти"
+          value={filter}
         />
       </div>
       <div>
-        <NoteList items={findNotes} removeNote={removeNote} />
+        <NoteList items={notes} removeNote={onRemoveNote} />
       </div>
     </div>
   );
 };
+
 
 export default Notes;

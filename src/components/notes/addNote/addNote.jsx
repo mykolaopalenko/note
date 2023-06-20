@@ -7,13 +7,16 @@ const AddNote = ({ onSubmit, id }) => {
   const [state, setState] = useState({
     title: '',
     text: '',
+    favorite: false
   });
 
+
   const handleChange = ({ target }) => {
-    const { value, name } = target;
+    const { value, name, type, checked} = target;
+    const newValue = type === "checkbox" ? checked : value
     setState({
       ...state,
-      [name]: value,
+      [name]: newValue,
     });
   };
 
@@ -32,6 +35,7 @@ const AddNote = ({ onSubmit, id }) => {
 
   const titleId = useMemo(()=> nanoid(), [])
   const textId = useMemo(()=> nanoid(), [])
+  const favoriteId = useMemo(()=> nanoid(), [])
   
   return (
     <form onSubmit={handleSubmit} className={styles.noteForm}>
@@ -58,6 +62,18 @@ const AddNote = ({ onSubmit, id }) => {
           placeholder="Напишіть нотатку"
           type="text"
           required
+        />
+      </div>
+      <div className={styles.formGroup}>
+        <label htmlFor={id}>в обрані</label>
+        <input
+          id={favoriteId}
+          checked={state.favorite}
+          name="favorite"
+          onChange={handleChange}
+          className={styles.field}
+          placeholder="Напишіть нотатку"
+          type="checkbox"
         />
       </div>
       <button className={styles.btn}>Добавити нотатку</button>

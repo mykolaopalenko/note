@@ -3,14 +3,18 @@ import styles from './noteList.module.css';
 import NoteListItem from './NoteListItem';
 
 const NoteList = ({ items, removeNote }) => {
-  const elements = items.map(item => <NoteListItem id={item.id} {...item} removeNote={removeNote} />);
+   console.log("itemss",items)
+
+  const elements = items.map(item => (
+    <NoteListItem key={item.id} {...item} removeNote={removeNote} />
+  ));
+ 
   return (
     <div className={styles.notises}>
       <ul className={styles.items}>{elements}</ul>
     </div>
   );
 };
-
 export default NoteList;
 
 NoteList.defaultProps = {

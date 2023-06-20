@@ -1,0 +1,39 @@
+.navbar {
+  padding: 15px 0;
+}
+
+.row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.menu {
+  display: flex;
+  justify-self: center;
+}
+
+.link {
+  display: inline-block;
+  text-decoration: none;
+  padding: 10px 15px;
+  border: 1px solid red;
+  font-size: 18px;
+  color: red;
+  width: 100px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.item:not(:last-child) {
+  margin-right: 15px;
+}
+.link.active {
+  background-color: red;
+  color: #fff;
+}
+
+.link:hover {
+  background-color: red;
+  color: #fff;
+}
